@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+/vendor
+/node_modules
+/GoBackend/vendor
+
+# Laravel runtime files
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*
+
+# IDE and OS files
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
