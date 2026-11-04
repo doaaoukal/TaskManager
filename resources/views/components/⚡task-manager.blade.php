@@ -13,7 +13,7 @@ new class extends Component
 
     private function apiUrl()
     {
-        return 'http://127.0.0.1:8081/tasks';
+        return rtrim(config('services.go_api.url'), '/') . '/tasks';
     }
 
     public function mount()

@@ -122,9 +122,26 @@ func taskItemHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Health check endpoint
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.Header().Set("Allow", "GET")
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	json.NewEncoder(w).Encode(map[string]string{
+		"status": "healthy",
+	})
+}
+
 func main() {
 	http.HandleFunc("/tasks", tasksHandler)
 	http.HandleFunc("/tasks/", taskItemHandler)
+	http.HandleFunc("/health", healthHandler)
 
 	log.Println("Go API running at http://localhost:8081")
 	log.Fatal(http.ListenAndServe(":8081", nil))

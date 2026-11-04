@@ -1,58 +1,194 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager – Dockerized Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A task management web application built with **Laravel** and a **Go REST API**, containerized using **Docker** and orchestrated with **Docker Compose**.
 
-## About Laravel
+## Project Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Task Manager allows users to manage their tasks through a web interface. The Laravel application communicates with a separate Go backend service to perform task operations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Main Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- View all tasks.
+- Add new tasks.
+- Edit existing tasks.
+- Delete tasks.
+- REST API communication between Laravel and Go.
+- Containerized deployment using Docker.
+- Automated CI checks using GitHub Actions.
 
-## Learning Laravel
+## Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Technology | Purpose |
+|---|---|
+| Laravel | Web application |
+| PHP 8.4 | Application runtime |
+| Go | REST API backend |
+| SQLite | Laravel database |
+| Nginx | Web server |
+| Docker | Containerization |
+| Docker Compose | Service orchestration |
+| GitHub Actions | Continuous Integration |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Architecture
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+The application consists of three main services:
 
-## Agentic Development
+1. **Laravel App:** Handles the web application and task management interface.
+2. **Go Backend:** Provides REST API endpoints for task operations.
+3. **Nginx:** Serves the Laravel application through HTTP.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Docker Compose manages communication between the services.
 
-```bash
-composer require laravel/boost --dev
+## Project Structure
 
-php artisan boost:install
+```text
+TaskManager/
+│
+├── GoBackend/
+│   └── Dockerfile
+│
+├── docker/
+│   └── nginx/
+│       └── default.conf
+│
+├── docs/
+│   └── notes.md
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── Dockerfile
+├── docker-compose.yml
+├── Makefile
+├── .dockerignore
+├── .gitignore
+└── README.md
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Getting Started
 
-## Contributing
+### Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Make sure the following tools are installed:
 
-## Code of Conduct
+- Docker Desktop
+- Git
+- GNU Make (optional, for Makefile commands)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clone the Repository
 
-## Security Vulnerabilities
+```bash
+git clone https://github.com/doaaoukal/TaskManager.git
+cd TaskManager
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Configure Environment
 
-## License
+Create your environment file:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cp .env.example .env
+```
+
+Make sure the environment configuration is suitable for Docker Compose.
+
+### 3. Start the Application
+
+```bash
+docker compose up -d --build
+```
+
+### 4. Access the Application
+
+Open your browser:
+
+```text
+http://localhost:8000
+```
+
+The Go API is available at:
+
+```text
+http://localhost:8081
+```
+
+Health check endpoint:
+
+```text
+http://localhost:8081/health
+```
+
+## Makefile Commands
+
+| Command | Description |
+|---|---|
+| `make up` | Start all services |
+| `make down` | Stop all services |
+| `make restart` | Restart services |
+| `make build` | Build Docker images |
+| `make logs` | Display service logs |
+| `make ps` | Show running containers |
+| `make test` | Run Go backend tests |
+| `make clean` | Remove containers and volumes |
+
+**Note:** `make clean` removes Docker volumes and persistent application data.
+
+## Docker Features
+
+This project implements the following Docker features:
+
+- Multi-stage Docker builds for Laravel and Go.
+- Docker Compose for multi-container orchestration.
+- Health checks for the Go backend.
+- Persistent volumes for SQLite and public assets.
+- Separate containers for application, web server, and API.
+- `.dockerignore` to optimize the build context.
+
+## Continuous Integration
+
+GitHub Actions is configured to run automated checks.
+
+The CI workflow includes:
+
+- Laravel dependency installation.
+- Frontend asset compilation.
+- Go backend test execution.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/tasks` | Retrieve all tasks |
+| POST | `/tasks` | Create a task |
+| PUT | `/tasks/{id}` | Update a task |
+| DELETE | `/tasks/{id}` | Delete a task |
+| GET | `/health` | Check API health |
+
+## Testing
+
+The application was tested by:
+
+- Building Docker images.
+- Running all services using Docker Compose.
+- Verifying application accessibility.
+- Testing task creation, editing, and deletion.
+- Checking Go API health.
+- Running the Go test command.
+- Verifying GitHub Actions execution.
+
+**Note:** The Go backend currently stores tasks in memory, so task data is reset when the Go container restarts. The Go test command currently completes successfully, although no Go test files have been added yet.
+
+## Documentation
+
+For additional implementation details and development decisions, see:
+
+[`docs/notes.md`](docs/notes.md)
+
+## GitHub Repository
+
+[Task Manager – GitHub Repository](https://github.com/doaaoukal/TaskManager)
+
+---
+
+**Developed as part of a university assignment on Git, GitHub, Docker, and CI/CD.**
