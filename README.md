@@ -258,5 +258,9 @@ For additional implementation details and development decisions, see:
     <img src="https://img.shields.io/badge/Project-Repository-2EA44F?style=for-the-badge&logo=github&logoColor=white" />
   </a>
 </p>
-ravel, Go, and Docker
+
+---
+
+<p align="center">
+  💙 <strong>Built with Laravel, Go, and Docker</strong>
 </p>
