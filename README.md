@@ -258,13 +258,5 @@ For additional implementation details and development decisions, see:
     <img src="https://img.shields.io/badge/Project-Repository-2EA44F?style=for-the-badge&logo=github&logoColor=white" />
   </a>
 </p>
-
----
-
-<p align="center">
-  💙 <strong>Developed by Doaa Oukal</strong>
-  <br>
-  <sub>University Assignment – Git, GitHub, Docker & CI/CD</sub>
-  <br><br>
-  🚀 Built with Laravel, Go, and Docker
+ravel, Go, and Docker
 </p>
